@@ -3,3 +3,37 @@
   padding: 0;
   box-sizing: border-box;
 }
+.jumbotron-fluid{
+  background-image:linear-gradient(to right, #3C6DC3, #230755);
+  color: whitesmoke;
+  text-align: center;
+  padding: 0.5% 0;
+}
+#searchBtn{
+  display: block;
+}
+.container{
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+}
+.current-weather .card-body{
+  padding: 5px;
+}
+.current-weather p{
+  padding-left: 20px;
+}
+.form-control{
+  width: 100%;
+}
+#searchBtn{
+  margin-top: 10px;
+}
+.card-body{
+  display: flex;
+  border: none;
+}
+.weatherIcon{
+  width: 50px;
+  height: 50px;
+}

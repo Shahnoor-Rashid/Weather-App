@@ -1,5 +1,6 @@
 'use strict';
 
+//Creating variables where we will store all the values we fetch through the API call
 const searchBtn = document.querySelector('#searchBtn');
 const cityname = document.querySelector('.cityName');
 const date = document.querySelector('.date');
@@ -59,6 +60,8 @@ function localCityList() {
         renderCity();
     }
 }
+
+// Search for a city on pressing Enter button
 $("#inputCityName").keypress(function (e) {
     if (e.which == 13) {
         $("#searchBtn").click();
@@ -158,6 +161,8 @@ async function displayWeather(city_name) {
                 });
         });
 }
+
+// creating an async function for the five day forecast
 async function displayFiveDayForecast(city_name) {
     cardHeader.innerHTML = '5-Day Forecast';
     let response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city_name}&units=imperial&appid=cd34f9c36fc9fbead917d73e1e4a5b2e`);
@@ -217,4 +222,5 @@ for (let i = 0; i < storedCitiesList.length; i++) {
         historyDisplayWeather(storedCitiesList[i].getAttribute("data-name"));
     }, false)
 }
+
 

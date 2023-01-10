@@ -17,7 +17,7 @@ Please see below.
 
 ## Installation
 
-To access the website, please click the link below.
+To access the website, please click the link.
 [WeatherApp]
 (https://shahnoor-rashid.github.io/Weather-App/)
 

@@ -158,4 +158,63 @@ async function displayWeather(city_name) {
                 });
         });
 }
+async function displayFiveDayForecast(city_name) {
+    cardHeader.innerHTML = '5-Day Forecast';
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city_name}&units=imperial&appid=cd34f9c36fc9fbead917d73e1e4a5b2e`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    let myResponse = response.json();
+    myResponse.then(data => {
+        console.log('5-day: ', data);
+        var forecastDiv = $("<div  id='fiveDayForecast'>");
+        var forecastHeader = $("<h3 class='card-header border-secondary'>").text("5 Day Forecast");
+        forecastDiv.append(forecastHeader);
+        var cardDeck = $("<div  class='card-deck'>");
+        forecastDiv.append(cardDeck);
+        for (let i = 0; i < data.list.length; i += 8) {
+            var forecastCard = $("<div class='card mb-3 mt-3'>");
+            var cardBody = $("<div class='card-body d-block'>");
+            var val = data['list'][i]['dt_txt'].slice(0, 10).split('-');
+            // console.log(val);
+            var [dd, mm, yyyy] = [val[2], val[1], val[0]];
+            var formatedDate = `${dd}/${mm}/${yyyy}`;
+            // console.log(val.slice(0, 10).split('-').join('/'));
+            var forecastDate = $("<h5 class='card-title'>").text(formatedDate);
+            cardBody.append(forecastDate);
+            var getCurrentWeatherIcon = data['list'][i]['weather'][0]['icon'];
+            // console.log(getCurrentWeatherIcon);
+            var displayWeatherIcon = $("<img src = http://openweathermap.org/img/wn/" + getCurrentWeatherIcon + ".png />");
+            cardBody.append(displayWeatherIcon);
+            var getTemp = data['list'][i]['main']['temp'];
+            var tempEl = $("<p class='card-text '>").text("Temp: " + getTemp + "° F");
+            cardBody.append(tempEl);
+            var getHumidity = data['list'][i]['main']['humidity'];
+            var humidityEl = $("<p class='card-text'>").text("Humidity: " + getHumidity + "%");
+            cardBody.append(humidityEl);
+            var getWind = data['list'][i]['wind']['speed'];
+            var windEl = $("<p class='card-text'>").text("Wind: " + getWind + "MPH");
+            cardBody.append(windEl);
+            forecastCard.append(cardBody);
+            cardDeck.append(forecastCard);
+        }
+        $("#forecastContainer").html(forecastDiv);
+    })
+}
+
+function historyDisplayWeather(city_name) {
+    console.log(city_name);
+    displayWeather(city_name);
+    displayFiveDayForecast(city_name);
+    console.log(city_name);
+
+}
+const storedCitiesList = document.querySelectorAll('.city');
+console.log(storedCitiesList);
+for (let i = 0; i < storedCitiesList.length; i++) {
+    storedCitiesList[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        historyDisplayWeather(storedCitiesList[i].getAttribute("data-name"));
+    }, false)
+}
 
